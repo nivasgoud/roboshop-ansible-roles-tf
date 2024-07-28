@@ -1,6 +1,3 @@
-  vars_files:
-      - variables.yaml
-
 - name: "Create a user roboshop and download the {{component}} application"
   ansible.builtin.import_role:
       name: common
