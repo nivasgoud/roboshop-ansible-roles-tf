@@ -1,0 +1,31 @@
+- name: "Create a user roboshop and download the {{component}} application"
+  ansible.builtin.import_role:
+      name: common
+      tasks_from: app-setup
+
+- name: "Install NodeJS and Install the {{component}} application"
+  ansible.builtin.import_role:
+      name: common
+      tasks_from: app-setup
+
+- name: "copy {{component}} service to system service path"
+  ansible.builtin.copy:
+    src: "{{component}}.service"
+    dest: "/etc/systemd/system/{{component}}.service"
+
+
+- name: "Copy Mongo Repo and Install MongoDB client"
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: mongodb-setup
+
+- name: Loading the schemas to MongoDB server
+  vars_files:
+    - variables.yaml
+  ansible.builtin.shell:
+    cmd: mongo --host "{{MONGODB_HOS}}" < "/app/schema/{{component}}.js"
+
+- name: "Reload the {{component}} service enable and restart application"
+  ansible.builtin.import_role:
+      name: common
+      tasks_from: systemd
