@@ -1,0 +1,22 @@
+- name: Copy mongo repository from Ansible Tower to MongoDB server
+  ansible.builtin.copy:
+      src: mongo.repo
+      dest: /etc/yum.repos.d/mongo.repo
+      #remote_src: yes #This key value would check the file in remote server to copy to that location
+
+- name: Install MongoDB
+  ansible.builtin.dnf:
+      name: mongodb-org
+      state: present
+
+- name: Replace localhost to global
+  ansible.builtin.replace:
+      path: /etc/mongod.conf
+      regexp: '127.0.0.1'
+      replace: '0.0.0.0'
+
+- name: Start and Enable the mongod service
+  ansible.builtin.service:
+      name: mongod
+      state: restarted
+      enabled: yes
