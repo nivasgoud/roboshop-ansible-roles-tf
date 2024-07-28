@@ -1,0 +1,5 @@
+- name: "Main Playbook to Install and Configure the {{component}}"
+  hosts: "{{component}}"
+  become: yes
+  roles:
+    - "{{component}}"
