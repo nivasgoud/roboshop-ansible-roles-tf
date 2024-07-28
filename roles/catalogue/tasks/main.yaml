@@ -20,10 +20,10 @@
     tasks_from: mongodb-setup
 
 - name: Loading the schemas to MongoDB server
-  vars_files:
+   vars_files:
     - variables.yaml
   ansible.builtin.shell:
-    cmd: mongo --host "{{MONGODB_HOS}}" < "/app/schema/{{component}}.js"
+    cmd: mongo --host "{{MONGODB_HOST}}" < "/app/schema/{{component}}.js"
 
 - name: "Reload the {{component}} service enable and restart application"
   ansible.builtin.import_role:
