@@ -1,3 +1,6 @@
+  vars_files:
+      - variables.yaml
+
 - name: "Create a user roboshop and download the {{component}} application"
   ansible.builtin.import_role:
       name: common
@@ -20,8 +23,6 @@
     tasks_from: mongodb-setup
 
 - name: Loading the schemas to MongoDB server
-   vars_files:
-    - variables.yaml
   ansible.builtin.shell:
     cmd: mongo --host "{{MONGODB_HOST}}" < "/app/schema/{{component}}.js"
 
