@@ -1,0 +1,8 @@
+- name: copy mongodb repository to yum repository location
+  ansible.builtin.copy:
+    src: mongo.repo
+    dest: /etc/yum.repos.d/mongo.repo
+
+- name: Installing MongoDB client
+  ansible.builtin.command:
+    cmd: dnf install mongodb-org-shell -y
