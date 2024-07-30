@@ -1,0 +1,22 @@
+- name: Install redis repository from rpm
+  ansible.builtin.dnf:
+    name: 'https://rpms.remirepo.net/enterprise/remi-release-8.rpm'
+    state: present
+    disable_gpg_check: true
+
+- name: Install and enable redis
+  ansible.builtin.dnf:
+    name: redis
+    enablerepo: redis:remi-6.2
+    state: present
+
+- name: Enabling the redis service to access from remote server
+  ansible.builtin.replace:
+    path: /etc/redis.conf
+    regexp: '127.0.0.1'
+    replace: '0.0.0.0'
+
+- name: Enabling and starting the redis server
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: systemd
