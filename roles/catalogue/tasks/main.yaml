@@ -21,7 +21,7 @@
 
 - name: Loading the schemas to MongoDB server
   ansible.builtin.shell:
-    cmd: mongo --host mongodb.nivasdevops.online < "/app/schema/{{component}}.js"
+    cmd: mongo --host "{{MONGODB_HOST}}" < "/app/schema/{{component}}.js"
 
 - name: "Reload the {{component}} service enable and restart application"
   ansible.builtin.import_role:
