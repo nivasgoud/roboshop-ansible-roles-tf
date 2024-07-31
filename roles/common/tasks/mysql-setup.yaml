@@ -1,0 +1,18 @@
+- name: Install MySQL Client Tool to load schema data to MYSQL Server
+  ansible.builtin.dnf:
+    name: mysql
+    state: present
+
+- name: check cities schema exists or not
+  ansible.builtin.command:  
+    cmd: mysql -h {{MYSQL_HOST}} -uroot -p{{mysql_password}} -sN -e "SELECT COUNT(*) FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'cities'"
+  register: schema
+
+- name: print output
+  ansible.builtin.debug:
+    msg: "schema outptut: {{schema}}"
+
+- name: Loading the schema with cities data
+  ansible.builtin.shell:
+    cmd: "mysql -h {{MYSQL_HOST}} -uroot -p{{mysql_password}}  < /app/schema/shipping.sql"
+  when: schema.stdout != "1"

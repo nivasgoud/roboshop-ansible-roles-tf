@@ -1,0 +1,14 @@
+- name: "Install golang for {{component}} service setup"
+  ansible.builtin.dnf:
+    name: golang
+    state: present
+
+- name: "Build the {{component}} software to deploy as a {{component}} service"
+  ansible.builtin.command:
+    cmd: "{{item}}"
+  loop:
+    - go mod init dispatch
+    - go get 
+    - go build
+  args:
+    chdir: /app

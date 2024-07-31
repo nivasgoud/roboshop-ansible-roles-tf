@@ -1,0 +1,23 @@
+- name: Configuring YUM Repos provided by Vendor
+  ansible.builtin.shell:
+    cmd: curl -s https://packagecloud.io/install/repositories/rabbitmq/erlang/script.rpm.sh | bash 
+
+- name: Configuring RabbitMQ Repos provided by Vendor
+  ansible.builtin.shell:
+    cmd: curl -s https://packagecloud.io/install/repositories/rabbitmq/rabbitmq-server/script.rpm.sh | bash
+
+- name: Installing RabbitMQ
+  ansible.builtin.dnf:
+    name: rabbitmq-server
+    state: present
+
+- name: Starting and Enabling service
+  ansible.builtin.systemd_service:
+    enabled: true
+    name: rabbitmq-server
+    state: started 
+
+- name: Default user guest cannot be used we are creating new Rabbit MQ user and providing permissions to connect application
+  ansible.builtin.shell: |
+    rabbitmqctl add_user roboshop roboshop123
+    rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"

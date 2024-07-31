@@ -1,0 +1,24 @@
+- name: "Create a user roboshop and download the {{component}} application"
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: app-setup
+
+- name: "Installing the maven and building the {{shipping}}.jar using maven"
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: java
+
+- name: "copy {{component}} service to system service path"
+  ansible.builtin.copy:
+    src: "{{component}}.service"
+    dest: "/etc/systemd/system/{{component}}.service"
+
+- name: "Setting up MYSQL Client Tool and Load the shipping"
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: mysql-setup
+
+- name: "Reloading and Restarting the server"
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: systemd

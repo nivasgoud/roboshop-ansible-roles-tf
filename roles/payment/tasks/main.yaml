@@ -1,0 +1,19 @@
+- name: "Downloading the {{component}} application and deploying the {{component}} application"
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: app-setup
+
+- name: "Install the {{component}} application"
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: python
+
+- name: "Copying the {{component}} service file"
+  ansible.builtin.copy:
+    src: payment.service
+    dest: /etc/systemd/system/payment.service
+
+- name: "Load the system service and restart the {{component}} service"
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: systemd

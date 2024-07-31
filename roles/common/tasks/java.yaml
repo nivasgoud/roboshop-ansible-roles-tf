@@ -1,0 +1,16 @@
+- name: Install Maven which is a Java packaging tool
+  ansible.builtin.dnf:
+    name: maven
+    state: present
+
+- name: Building the Shipping application using maven
+  ansible.builtin.command:
+    cmd: mvn clean package
+  args:
+    chdir: /app
+    
+- name: "Renaming {{component}}.jar file" 
+  ansible.builtin.command:
+    cmd: "mv target/{{component}}-{{shipping_version}}.jar {{component}}.jar"
+  args:
+    chdir: /app
