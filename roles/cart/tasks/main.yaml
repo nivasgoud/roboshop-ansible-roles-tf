@@ -1,0 +1,19 @@
+- name: "Create a user roboshop and download the {{component}} application"
+  ansible.builtin.import_role:
+      name: common
+      tasks_from: app-setup
+
+- name: "Install NodeJS and Install the {{component}} application"
+  ansible.builtin.import_role:
+      name: common
+      tasks_from: nodejs
+
+- name: "copy {{component}} service to system service path"
+  ansible.builtin.copy:
+    src: "{{component}}.service"
+    dest: "/etc/systemd/system/{{component}}.service"
+
+- name: "Reload the {{component}} service enable and restart application"
+  ansible.builtin.import_role:
+      name: common
+      tasks_from: systemd
