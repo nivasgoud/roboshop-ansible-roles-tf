@@ -1,0 +1,10 @@
+MONGODB_HOST: mongodb-prod.nivasdevops.online # submit your host
+REDIS_HOST: redis-prod.nivasdevops.online
+MYSQL_HOST: mysql-prod.nivasdevops.online
+RABBITMQ_HOST: rabbitmq-prod.nivasdevops.online
+CATALOGUE_HOST: catalogue-prod.nivasdevops.online
+USER_HOST: user-prod.nivasdevops.online
+CART_HOST: cart-prod.nivasdevops.online
+SHIPPING_HOST: shipping-prod.nivasdevops.online
+PAYMENT_HOST: payment-prod.nivasdevops.online
+DISPATCH_HOST: dispatch-prod.nivasdevops.online
